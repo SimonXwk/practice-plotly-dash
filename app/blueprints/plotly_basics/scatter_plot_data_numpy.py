@@ -1,6 +1,6 @@
 import numpy as np
 import plotly.graph_objs as go
-from app.blueprints.plotly_basics import bp
+from app.blueprints.plotly_basics import plot_offline
 
 np.random.seed(42)  # set the seed (any number) to obtain the same points every time
 points = 100
@@ -27,4 +27,4 @@ layout = go.Layout(title="Scatter Chart Example",
                    )
 
 fig = go.Figure(data=data, layout=layout)
-bp.plot_offline(fig)
+plot_offline(fig)

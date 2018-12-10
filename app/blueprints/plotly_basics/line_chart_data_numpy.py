@@ -1,6 +1,7 @@
 import numpy as np
 import plotly.graph_objs as go
-from app.blueprints.plotly_basics import bp
+from . import plot_offline
+
 
 np.random.seed(56)
 points = 100
@@ -16,4 +17,4 @@ data = [trace0, trace1, trace2]
 layout = go.Layout(title="Line Chart Example")
 
 fig = go.Figure(data=data, layout=layout)
-bp.plot_offline(fig)
+plot_offline(fig)

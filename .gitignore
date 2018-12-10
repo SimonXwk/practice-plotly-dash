@@ -3,31 +3,25 @@
 __pycache__/
 *$py.class
 
-
 # virtual environment
 env/
 .env
 
-
 # Packaging
 node_modules/
-
 
 # Distribution / packaging
 dist/
 build/
 
-
 # Editor / Os
 .idea/
 .vscode
 
-
 # OS generated
 Thumbs.db
 
-
 # App
 instance/
-app/**/template/temp.html
+app/**/templates/temp.html
 *.egg-info/

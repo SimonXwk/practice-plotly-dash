@@ -2,12 +2,12 @@ from functools import wraps
 from flask import render_template, request
 
 
-def templatified(template=None, title=None, absolute=False, extension='html', require_login=False):
+def templatified(template=None, title=None, template_path_absolute=False, template_format='html', require_login=False):
 	""" Function that accepts arguments passed to decorator and creates the Actual Decorator
 	:param template: The Name of the template that will be used in flask.render_template(template)
 	:param title: The Name of page title, passed to flask.render_template() as a parameter
-	:param absolute: set to True when the template provided in its full path, no further process needed in this function
-	:param extension: default to .html if not provided, the template string will be checked if ends with extension string
+	:param template_path_absolute: set to True when the template provided in its full path, no further process needed in this function
+	:param template_format: default to .html if not provided, the template string will be checked if ends with template_format string
 	:param require_login: whether login is required to have access to this view
 	:return: Decorator function
 	"""
@@ -41,11 +41,12 @@ def templatified(template=None, title=None, absolute=False, extension='html', re
 			if template_name is None or str(template_name).strip() == '':
 				template_name = request.endpoint.replace('.', '/')
 			# If template was not given by its full path, then append the sub-folder name in front of it (which should be created using its blueprint's name)
-			elif not absolute:
+			elif not template_path_absolute:
 				template_name = '/'.join((request.blueprint, template_name)) if request.blueprint else template_name
-			# If template does not end with the extension provided, append it
-			if template_name[-len(extension):] != extension:
-				template_name = '.'.join((template_name, extension))
+			
+			# If template does not end with the template_format provided, append it
+			if template_name[-len(template_format):] != template_format:
+				template_name = '.'.join((template_name, template_format))
 
 			# By default add a title parameter to flask.render_template() function using dictionary unpacking
 			if page_title is None:
