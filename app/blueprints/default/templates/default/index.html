@@ -1,0 +1,17 @@
+{% extends 'app.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+  <div class="row">
+		<div class="col">
+			<h1 class="display-4">Plotly-Dash Demonstration</h1>
+			<p class="lead">{{ lipsum(n=5, min=20, max=100) }}</p>
+		</div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,17 +1,33 @@
 # Byte-compiled / optimized / DLL files
 *.py[cod]
 __pycache__/
+*$py.class
+
+
+# virtual environment
+env/
+.env
+
+
+# Packaging
+node_modules/
+
 
 # Distribution / packaging
-env/
-node_modules/
 dist/
 build/
+
 
 # Editor / Os
 .idea/
 .vscode
 
+
+# OS generated
+Thumbs.db
+
+
 # App
-instance/*.*
+instance/
+app/**/template/temp.html
 *.egg-info/
