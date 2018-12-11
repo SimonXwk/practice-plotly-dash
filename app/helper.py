@@ -1,8 +1,9 @@
-from functools import wraps
 from flask import render_template, request
+from werkzeug.utils import import_string, cached_property
+from functools import wraps
 
 
-def templatified(template=None, title=None, template_path_absolute=False, template_format='html', require_login=False):
+def apply_template(template=None, title=None, template_path_absolute=False, template_format='html', require_login=False):
 	""" Function that accepts arguments passed to decorator and creates the Actual Decorator
 	:param template: The Name of the template that will be used in flask.render_template(template)
 	:param title: The Name of page title, passed to flask.render_template() as a parameter
@@ -53,24 +54,24 @@ def templatified(template=None, title=None, template_path_absolute=False, templa
 				page_title = request.endpoint.replace('_', ' ').title()
 				if not (request.blueprint is None):
 					page_title = page_title.rsplit('.', 1)[1]
-			default_dic = {'title': page_title}  # Page title block in global jinja template block
+			default_context = {'title': page_title}  # Page title block in global jinja template block
 
 			# Run the wrapped function, which should return a dictionary of Parameters
-			dic = f(*args, **kwargs)
+			context = f(*args, **kwargs)
 
-			if not isinstance(dic, dict):
+			if not isinstance(context, dict):
 				try:
-					dic = dict(dic)
+					context = dict(context )
 				except TypeError:
 					# todo : Find a better way to deal with this scenario
 					# print(f'!!! View Function not returning dict convertible object : [ {dic.__class__.__name__} ] returned by view function [ {f.__name__} ]  will be set to dict()')
-					dic = {}
+					context = {}
 
 			# Merge two dic, default dic will be overwritten if same key appears in the dictionary returned by the function
-			dic = {**default_dic, **dic}
+			context = {**default_context, **context}
 
 			# Render the template
-			return render_template(template_name, **dic)
+			return render_template(template_name, **context)
 
 		if require_login:
 			pass
@@ -78,3 +79,25 @@ def templatified(template=None, title=None, template_path_absolute=False, templa
 		return decorated_function
 
 	return decorator
+
+
+# At rest class object could be used (called) when it's used
+class LazyLoad(object):
+	def __init__(self, import_name):
+		self.__module__, self.__name__ = import_name.rsplit('.', 1)
+		self.import_name = import_name
+		self.fall_back_func = lambda: f'"{self.import_name}" is not callable object hence can not be used as view_func'
+
+	@cached_property
+	def imported_object(self):
+		obj = import_string(self.import_name)
+		print(f' . Lazy Loaded <{ self.import_name }> - {type(obj)}')
+		return obj
+
+	def __call__(self, *args, **kwargs):
+		if hasattr(self.imported_object, '__call__'):
+			return self.imported_object(*args, **kwargs)
+		else:
+			# TODO Add this to customized 500 error page
+			return self.fall_back_func()
+

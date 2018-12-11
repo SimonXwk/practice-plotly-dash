@@ -1,6 +1,6 @@
 import numpy as np
 import plotly.graph_objs as go
-from . import plot_offline
+from app.blueprints.plotly_basics import plot_offline
 
 
 np.random.seed(56)
@@ -14,7 +14,7 @@ trace2 = go.Scatter(x=x_values, y=y_values-5, mode="lines+markers", name="series
 
 data = [trace0, trace1, trace2]
 
-layout = go.Layout(title="Line Chart Example")
+layout = go.Layout(title="Line Chart Example using Numpy")
 
 fig = go.Figure(data=data, layout=layout)
 plot_offline(fig)
