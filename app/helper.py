@@ -1,6 +1,7 @@
 from flask import render_template, request
 from werkzeug.utils import import_string, cached_property
 from functools import wraps
+import plotly.offline as pyo
 
 
 def apply_template(template=None, title=None, template_path_absolute=False, template_format='html', require_login=False):
@@ -101,3 +102,12 @@ class LazyLoad(object):
 			# TODO Add this to customized 500 error page
 			return self.fall_back_func()
 
+
+def plot_div_to_example_html(f):
+	@apply_template('example', title="Plotly Demo")
+	@wraps(f)
+	def decorated_function(*args, **kwargs):
+		figure = f(*args, **kwargs)
+		plot_string = pyo.plot(figure, output_type='div')
+		return dict(plot=plot_string)
+	return decorated_function

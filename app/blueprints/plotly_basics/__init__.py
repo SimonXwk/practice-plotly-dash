@@ -1,14 +1,12 @@
 from app.blueprints import MyBlueprint
-import plotly.offline as pyo
-import os
 
-bp = MyBlueprint('plotly_basic', __name__)
+bp = MyBlueprint('plotly_basics', __name__)
 
-
-def plot_offline(figure):
-	pyo.plot(figure, filename=bp.offline_temp_html)
-
-
-def get_data_file_path(filename=None):
-	base_path = bp.blueprint.root_path.rsplit(os.sep, 2)[0]
-	return os.path.join(base_path, 'data_source', filename)
+bp.add_url('scatter_plot_example1.draw', ['/scatter1'], endpoint='scatter1')
+bp.add_url('line_chart_example1.draw', ['/line1'], endpoint='line1')
+bp.add_url('line_chart_example2.draw', ['/line2'], endpoint='line2')
+bp.add_url('line_chart_exercise.draw', ['/line3'], endpoint='line3')
+bp.add_url('bar_chart_example1.draw', ['/bar1'], endpoint='bar1')
+bp.add_url('bar_chart_exercise1.draw', ['/bar2'], endpoint='bar2')
+bp.add_url('bubble_plot_example1.draw', ['/bubble1'], endpoint='bubble1')
+bp.add_url('bubble_plot_exercise1.draw', ['/bubble2'], endpoint='bubble2')

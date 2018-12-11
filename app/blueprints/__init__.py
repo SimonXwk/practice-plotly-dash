@@ -2,15 +2,12 @@ from werkzeug.utils import find_modules, import_string
 from flask import Blueprint
 import os
 from app.helper import LazyLoad
-from functools import wraps
 
 
 class MyBlueprint(object):
 	def __init__(self, blueprint_name, import_name, has_url_prefix=True, **options):
 		self.blueprint = Blueprint(blueprint_name, import_name, static_folder='static', template_folder='templates', url_prefix='/' + blueprint_name if has_url_prefix else '', **options)
 		self.static_folder_path = os.path.join(self.blueprint.root_path, self.blueprint.static_folder)
-		self.template_folder_path = os.path.join(self.blueprint.root_path, self.blueprint.template_folder)
-		self.offline_temp_html = os.path.join(self.template_folder_path, 'temp.html')
 
 	def lazy_load_view_func(self, import_name):
 		string_to_import = '.'.join((self.blueprint.import_name, import_name))
@@ -29,26 +26,6 @@ class MyBlueprint(object):
 	def add_test(self, import_name, test_name):
 		lazy_loader = self.lazy_load_view_func(import_name)
 		self.blueprint.add_app_template_test(lazy_loader, name=test_name)
-
-# def mount_view_func(f):
-# 	@wraps(f)
-# 	def decorated_function(*args, **kwargs):
-# 		import inspect
-# 		import_string_module = __name__
-# 		import_string_function = inspect.getframeinfo(inspect.currentframe()).function
-# 		import_name = '.'.join((import_string_module, import_string_function))
-# 		print(import_name)
-#
-# 		return f(*args, **kwargs)
-# 	return decorated_function
-#
-#
-# def exec_import_name():
-# 	import inspect
-# 	import_string_module = __name__
-# 	import_string_function = inspect.getframeinfo(inspect.currentframe()).function
-# 	import_name = '.'.join((import_string_module, import_string_function))
-# 	return import_name
 
 
 # Circular import in Blueprint is not allowed for this method
