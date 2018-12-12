@@ -7,6 +7,7 @@ from app.helper import LazyLoad
 class MyBlueprint(object):
 	def __init__(self, blueprint_name, import_name, has_url_prefix=True, **options):
 		self.blueprint = Blueprint(blueprint_name, import_name, static_folder='static', template_folder='templates', url_prefix='/' + blueprint_name if has_url_prefix else '', **options)
+		self.url_dict = tuple()
 		self.static_folder_path = os.path.join(self.blueprint.root_path, self.blueprint.static_folder)
 
 	def lazy_load_view_func(self, import_name):
@@ -26,6 +27,11 @@ class MyBlueprint(object):
 	def add_test(self, import_name, test_name):
 		lazy_loader = self.lazy_load_view_func(import_name)
 		self.blueprint.add_app_template_test(lazy_loader, name=test_name)
+
+	def register_urls(self, view_funcs_list):
+		self.url_dict = view_funcs_list
+		for view_func_dic in self.url_dict:
+			self.add_url(**view_func_dic)
 
 
 # Circular import in Blueprint is not allowed for this method

@@ -10,3 +10,24 @@
 
 {% block js_framework %}
 {% endblock %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block navbar %}
+<h1 class="text-primary">Plotly-Dash Demonstration</h1>
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a href="{{ url_for('plotly_basics.index') }}">Plotly Basic Plots</a></li>
+		<li class="breadcrumb-item"><a href="#">Dash</a></li>
+	</ol>
+</nav>
+{% endblock %}
+
+
+{% block footer %}
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb ">
+		<li class="breadcrumb-item text-info">{{ request.endpoint }}</li>
+	</ol>
+</nav>
+{% endblock %}
