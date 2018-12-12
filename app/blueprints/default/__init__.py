@@ -3,9 +3,13 @@ from flask import send_from_directory
 
 bp = MyBlueprint('default', __name__, has_url_prefix=False)
 
+view_funcs_list = (
+	dict(import_name='view_funcs.root_view_handler', url_rules=['/'], endpoint='index'),
+	dict(import_name='favicon_handler', url_rules=['/favicon.ico']),
+)
+
 # Add URL rules to the blueprint ( a wrapper around .add_url_rule() function )
-bp.add_url('favicon_handler', ['/favicon.ico'])
-bp.add_url('view_funcs.root_view_handler', ['/'])
+bp.register_urls(view_funcs_list)
 
 
 def favicon_handler():

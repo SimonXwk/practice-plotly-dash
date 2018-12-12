@@ -38,6 +38,7 @@ def draw():
     data = [go.Scatter(x=df[x_dimension],
                        y=df[y_dimension],
                        text=df[text_dimension].str.title(),
+                       name="mpg data",
                        mode="markers",
                        marker=dict(size=bubble_size,
                                    color=df[color_dimension],
@@ -48,6 +49,7 @@ def draw():
     layout = go.Layout(title=f"MPG {x_dimension.title()} & {y_dimension.title()}",
                        xaxis={'title': x_dimension},
                        yaxis={'title': y_dimension},
+                       hovermode="closest"
                        )
 
     # create a fig from data & layout, and plot the fig.
