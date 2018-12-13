@@ -5,7 +5,8 @@ from app.helper import LazyLoad
 
 
 class MyBlueprint(object):
-	def __init__(self, blueprint_name, import_name, has_url_prefix=True, **options):
+	def __init__(self, import_name, has_url_prefix=True, **options):
+		blueprint_name = import_name.rsplit('.', 1)[-1]
 		self.blueprint = Blueprint(blueprint_name, import_name, static_folder='static', template_folder='templates', url_prefix='/' + blueprint_name if has_url_prefix else '', **options)
 		self.url_dict = tuple()
 		self.static_folder_path = os.path.join(self.blueprint.root_path, self.blueprint.static_folder)

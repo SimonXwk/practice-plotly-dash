@@ -1,7 +1,7 @@
 from app.blueprints import MyBlueprint
 from app.helper import apply_template
 
-bp = MyBlueprint('plotly_basics', __name__)
+bp = MyBlueprint(__name__)
 
 view_funcs_list = (
 	dict(import_name='index', url_rules=['/'], endpoint='index'),
@@ -14,7 +14,8 @@ view_funcs_list = (
 	dict(import_name='bubble_plot_example1.draw', url_rules=['/bubble1'], endpoint='bubble1'),
 	dict(import_name='bubble_plot_exercise1.draw', url_rules=['/bubble2'], endpoint='bubble2'),
 	dict(import_name='box_plot_example1.draw', url_rules=['/box1'], endpoint='box1'),
-	dict(import_name='box_plot_exercise1.draw', url_rules=['/box2'], endpoint='box2'),
+	dict(import_name='box_plot_example2.draw', url_rules=['/box2'], endpoint='box2'),
+	dict(import_name='box_plot_exercise1.draw', url_rules=['/box3'], endpoint='box3'),
 )
 
 bp.register_urls(view_funcs_list)

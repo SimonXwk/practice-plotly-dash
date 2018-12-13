@@ -1,8 +1,7 @@
 import plotly.graph_objs as go
 import pandas as pd
 from app.data_source.csv import find_raw_csv_path
-from app.helper import plot_div_to_example_html
-from flask import request
+from app.helper import plot_div_to_example_html, request_arg
 
 
 @plot_div_to_example_html
@@ -17,10 +16,10 @@ def draw():
 
   data = [trace1, trace2, trace3]
 
-  barmode = str(request.args.get('barmode')).strip()
+  barmode = request_arg('barmode', 'group', str, lambda x: x in ('group', 'stack', 'relative'))
   layout = go.Layout(title="Bar Chart 2018 Winter Olympics",
                       yaxis={'title': 'Number of Medals'},
-                      barmode=barmode if  barmode in ('group', 'stack', 'relative') else 'group')
+                      barmode=barmode)
 
   fig = go.Figure(data=data, layout=layout)
   return fig

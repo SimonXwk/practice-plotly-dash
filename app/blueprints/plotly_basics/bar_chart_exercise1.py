@@ -9,8 +9,7 @@
 import plotly.graph_objs as go
 import pandas as pd
 from app.data_source.csv import find_raw_csv_path
-from app.helper import plot_div_to_example_html
-from flask import request
+from app.helper import plot_div_to_example_html, request_arg
 
 
 @plot_div_to_example_html
@@ -22,9 +21,9 @@ def draw():
   # df.set_index(df.columns[0], inplace=True)
  
   # create traces using a list comprehension:
-  series = str(request.args.get('series')).strip()
-  ori = str(request.args.get('orientation')).strip()
-  ori = ori if ori in ('v', 'h') else 'v'
+  series = request_arg('series', 'q', str, lambda x: x in ('q', 'r'))
+  ori = request_arg('orientation', 'v', str, lambda x: x in ('v', 'h'))
+
   if series == 'q':
     data = [go.Bar(x=df.columns if ori == 'v' else df.loc[idx, :], 
                     y=df.loc[idx, :] if ori == 'v' else df.columns, 
@@ -35,11 +34,11 @@ def draw():
                    name=col, orientation=ori) for col in df.columns]
 
   # create a layout, remember to set the barmode here
-  barmode = str(request.args.get('barmode')).strip()
+  barmode = request_arg('barmode', 'group', str, lambda x: x in ('group', 'stack', 'relative'))
   layout = go.Layout(title="Mocksurvey Result", 
                       yaxis={'title': 'Response Score'} if ori == 'v' else None,
                       xaxis={'title': 'Response Score'} if ori == 'h' else None,
-                      barmode=barmode if  barmode in ('group', 'stack', 'relative') else 'group')
+                      barmode=barmode)
 
   # create a fig from data & layout, and plot the fig.
   fig = go.Figure(data=data, layout=layout)

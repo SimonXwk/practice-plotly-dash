@@ -1,7 +1,7 @@
 from app.blueprints import MyBlueprint
 from flask import send_from_directory
 
-bp = MyBlueprint('default', __name__, has_url_prefix=False)
+bp = MyBlueprint(__name__, has_url_prefix=False)
 
 view_funcs_list = (
 	dict(import_name='view_funcs.root_view_handler', url_rules=['/'], endpoint='index'),
