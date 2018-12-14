@@ -83,7 +83,7 @@ def apply_template(template=None, title=None, template_path_absolute=False, temp
 
 
 # At rest class object could be used (called) when it's used
-class LazyLoad(object):
+class LazyLoader(object):
 	def __init__(self, import_name):
 		self.__module__, self.__name__ = import_name.rsplit('.', 1)
 		self.import_name = import_name
@@ -93,14 +93,13 @@ class LazyLoad(object):
 	def imported_object(self):
 		obj = import_string(self.import_name)
 		print(f' . Lazy Loaded <{ self.import_name }> - {type(obj)}')
-		return obj
+		if hasattr(obj, '__call__'):
+			return obj
+		# TODO Add this to customized 500 error page
+		return self.fall_back_func
 
 	def __call__(self, *args, **kwargs):
-		if hasattr(self.imported_object, '__call__'):
-			return self.imported_object(*args, **kwargs)
-		else:
-			# TODO Add this to customized 500 error page
-			return self.fall_back_func()
+		return self.imported_object(*args, **kwargs)
 
 
 def request_arg(arg_name, default_value, type_func=str, test_func=None):

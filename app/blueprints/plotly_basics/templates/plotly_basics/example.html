@@ -4,11 +4,16 @@
 {% block content %}
 {% if endpoints %}
 <div class="container-fluid">
-	<div class="list-group list-group-flush">
+	<div class="card-columns">
 		{% for endpoint in endpoints %}
 			{% set ep = endpoint.split('.')[-1] %}
 			{% if ep != "index" %}
-			<a href="{{ url_for(endpoint) }}" class="list-group-item list-group-item-action">{{ ep }}</a>
+			<div class="card">
+				<div class="card-body bg-light">
+					<h5 class="card-title">{{ ep|title }}</h5>
+					<p class="card-text"><a href="{{ url_for(endpoint) }}">{{ endpoint }}</a></p>
+				</div>
+    	</div>
 			{% endif %}
 		{% endfor %}
 	</div>
