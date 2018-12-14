@@ -1,9 +1,9 @@
 import plotly.graph_objs as go
 import numpy as np
-from app.helper import plot_div_to_example_html
+from app.helper import single_plot_to_html_div
 
 
-@plot_div_to_example_html
+@single_plot_to_html_div
 def draw():
   np.random.seed(56)
   points = 100

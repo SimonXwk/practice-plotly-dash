@@ -1,10 +1,9 @@
 import plotly.graph_objs as go
 import numpy as np
-from app.data_source.csv import find_raw_csv_path
-from app.helper import plot_div_to_example_html, request_arg
+from app.helper import single_plot_to_html_div, request_arg
 
 
-@plot_div_to_example_html
+@single_plot_to_html_div
 def draw():
     sample = np.random.randint(1, 1001, 200)    
 

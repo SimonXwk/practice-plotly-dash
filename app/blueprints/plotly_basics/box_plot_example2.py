@@ -4,12 +4,11 @@
 # Quintus Curtius Snodgrass and Mark Twain
 ######
 import plotly.graph_objs as go
-from app.data_source.csv import find_raw_csv_path
-from app.helper import plot_div_to_example_html, request_arg
+from app.helper import single_plot_to_html_div, request_arg
 from app.func_map import fm
 
 
-@plot_div_to_example_html
+@single_plot_to_html_div
 @fm.register(('/aaa', '/bbb'))
 def draw():
     compare = {
@@ -24,6 +23,7 @@ def draw():
     data = [go.Box(y=compare[c], name=c, boxpoints=boxpoints, jitter=jitter, pointpos=pointpos) for c in compare]
     layout = go.Layout(title="The Case of Mark Twain & Snodgrass",
                        yaxis={'title': 'Frequency'},
-                       hovermode="x")
+                       hovermode="x"
+                       )
     fig = go.Figure(data=data, layout=layout)
     return fig

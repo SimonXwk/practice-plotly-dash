@@ -8,10 +8,10 @@
 import plotly.graph_objs as go
 import pandas as pd
 from app.data_source.csv import find_raw_csv_path
-from app.helper import plot_div_to_example_html
+from app.helper import single_plot_to_html_div
 
 
-@plot_div_to_example_html
+@single_plot_to_html_div
 def draw():
   # Create a pandas DataFrame from 2010YumaAZ.csv
   csv_path = find_raw_csv_path('2010YumaAZ.csv')

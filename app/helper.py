@@ -115,17 +115,115 @@ def request_arg(arg_name, default_value, type_func=str, test_func=None):
 			return default_value
 
 	#  short-circuit if test_func is None
-	if test_func == None or test_func(arg):
+	if test_func is None or test_func(arg):
 		return type_func(arg)
 	return default_value
 	
 
-
-def plot_div_to_example_html(f):
-	@apply_template('example', title="Plotly Demo")
+def single_plot_to_html_div(f):
+	@apply_template('example', title="Example")
 	@wraps(f)
 	def decorated_function(*args, **kwargs):
 		figure = f(*args, **kwargs)
-		plot_string = pyo.plot(figure, output_type='div')
+		config = {
+			# no interactivity, for export or image generation
+			'staticPlot': False,
+			# base URL for the 'Edit in Chart Studio' (aka sendDataToCloud) mode bar button and the showLink/sendData on-graph link
+			'plotlyServerURL': 'https://plot.ly',
+			# change the title and axis titles
+			'editable': True,
+			'edits': {
+				'annotationPosition': False,
+				# just for annotations with arrows, change the length  and direction of the arrow
+				'annotationTail': False,
+				'annotationText': False,
+				'axisTitleText': False,
+				'colorbarPosition': False,
+				'colorbarTitleText': False,
+				'legendPosition': False,
+				# edit the trace name fields from the legend
+				'legendText': True,
+				'shapePosition': False,
+				# the global `layout.title`
+				'titleText': True
+			},
+
+			# responsive: determines whether to change the layout size when window is resized. In v2, this option will be removed and will always be true.
+			'responsive': True,
+			# set the length of the undo/redo queue
+			'queueLength': 0,
+
+			# DO autosize once regardless of layout.autosize (use default width or height values otherwise)
+			'autosizable': True,
+			# if we DO autosize, do we fill the container or the screen?
+			'fillFrame': False,
+			# if we DO autosize, set the frame margins in percents of plot size
+			'frameMargins': 0,
+
+			# mousewheel or two-finger scroll zooms the plot
+			'scrollZoom': False,
+			# double click interaction (false, 'reset', 'autosize' or 'reset+autosize')
+			'doubleClick': 'reset+autosize',
+			# new users see some hints about interactivity
+			'showTips': False,
+			# enable axis pan/zoom drag handles
+			'showAxisDragHandles': True,
+			# enable direct range entry at the pan/zoom drag points (drag handles must be enabled above)
+			'showAxisRangeEntryBoxes': True,
+
+			# Add a text link to open this plot in plotly? This link shows up in the bottom right corner of the plo
+			# This works identically to the newer ModeBar button controlled by `showSendToCloud` unless `sendData: false` is used.
+			'showLink': False,
+			# If we show a text link (`showLink: true`), does it contain data or just
+			# a reference to a plotly cloud file? This option should only be used on
+			# plot.ly or another plotly server, and is not supported by the newer ModeBar button `showSendToCloud`
+			'sendData': True,
+			# Should we include a ModeBar button, labeled "Edit in Chart Studio",
+			'showSendToCloud': False,
+			# text appearing in the sendData link
+			'linkText': 'Online Export',
+
+			# display the mode bar (true, false, or 'hover')
+			'displayModeBar': 'hover',
+			# remove/add mode bar button by name https://github.com/plotly/plotly.js/blob/master/src/components/modebar/buttons.js
+			# toImage, sendDataToCloud, zoom2d, pan2d, select2d, lasso2d, zoomIn2d, autoScale2d, resetScale2d, hoverClosestCartesian, hoverCompareCartesian
+			# zoom3d, pan3d, orbitRotation, tableRotation, resetCameraDefault3d, resetCameraLastSave3d, hoverClosest3d
+			# zoomInGeo, zoomOutGeo, resetGeo, hoverClosestGeo
+			# hoverClosestGl2d, hoverClosestPie, toggleHover, resetViews , toggleSpikelines, resetViewMapbox,
+			'modeBarButtonsToRemove': [],
+			'modeBarButtonsToAdd': [],
+			'displaylogo': False,  # add the plotly logo on the end of the mode bar
+			# fully custom mode bar buttons as nested array,
+			# where the outer arrays represents button groups,
+			# and the inner arrays have buttons config objects or names of default buttons
+			# see ../components/modebar/buttons.js
+			'modeBarButtons': False,
+			# statically override options for toImage modebar button
+			# allowed keys are format, filename, width, height, scale
+			# see ../components/modebar/buttons.js
+			'toImageButtonOptions': {},
+
+			# watermark the images with the company's logo
+			'watermark': False,
+			# increase the pixel ratio for Gl plot images
+			'plotGlPixelRatio': 2,
+			# 'transparent' sets the background `layout.paper_color`,
+			# 'opaque' blends bg color with white ensuring an opaque background
+			# or any other custom function of gd
+			'setBackground': 'transparent',
+
+			# URL to topojson files used in geo charts
+			'topojsonURL': 'https://cdn.plot.ly/',
+			# If using an Mapbox Atlas server, set this option to ''
+			'mapboxAccessToken': None,
+			# 0: no logs | 1: warnings and errors, but not informational messages | 2: verbose logs
+			'logging': 1,
+			# Set global transform to be applied to all traces with no specification needed
+			'globalTransforms': [],
+			# Should be a string like 'en' or 'en-US'
+			'locale': 'en-US',
+			'locales': {}
+		}
+		plot_string = pyo.plot(figure, output_type='div', config=config)
 		return dict(plot=plot_string)
 	return decorated_function
