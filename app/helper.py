@@ -136,12 +136,12 @@ def single_plot_to_html_div(f):
 				# just for annotations with arrows, change the length  and direction of the arrow
 				'annotationTail': False,
 				'annotationText': False,
-				'axisTitleText': False,
+				'axisTitleText': True,
 				'colorbarPosition': False,
 				'colorbarTitleText': False,
 				'legendPosition': False,
 				# edit the trace name fields from the legend
-				'legendText': True,
+				'legendText': False,
 				'shapePosition': False,
 				# the global `layout.title`
 				'titleText': True

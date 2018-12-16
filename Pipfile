@@ -13,6 +13,7 @@ dash-html-components = "*"
 dash-core-components = "*"
 werkzeug = "*"
 flask = "*"
+scipy = "*"
 
 [requires]
 python_version = "3.7"

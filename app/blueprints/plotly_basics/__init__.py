@@ -17,10 +17,11 @@ view_funcs_list = (
 	dict(import_name='histogram_example1.draw', url_rules=['/hist1'], endpoint='hist1'),
 	dict(import_name='histogram_exercise1.draw', url_rules=['/hist2'], endpoint='hist2'),
 	dict(import_name='distplots_example1.draw', url_rules=['/distp1'], endpoint='distp1'),
-	dict(import_name='distplots_exercise1.draw', url_rules=['/distp2'], endpoint='distp2'),
+	dict(import_name='distplots_example2.draw', url_rules=['/distp2'], endpoint='distp2'),
+	dict(import_name='distplots_exercise1.draw', url_rules=['/distp3'], endpoint='distp3'),
 	dict(import_name='heatmap_example1.draw', url_rules=['/heat1'], endpoint='heat1'),
-	dict(import_name='heatmap_exercise1.draw', url_rules=['/heat2'], endpoint='heat2'),
-
+	dict(import_name='heatmap_example2.draw', url_rules=['/heat2'], endpoint='heat2'),
+	dict(import_name='heatmap_exercise1.draw', url_rules=['/heat3'], endpoint='heat3'),
 )
 bp = MyBlueprint(__name__, url_rules=view_funcs_list)
 
