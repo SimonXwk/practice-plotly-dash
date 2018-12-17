@@ -2,6 +2,7 @@
 *.py[cod]
 __pycache__/
 *$py.class
+*.py.swp
 
 # virtual environment
 env/
@@ -25,3 +26,4 @@ Thumbs.db
 instance/
 app/**/templates/temp.html
 *.egg-info/
+app/blueprints/plotly_basics/.heatmap_example1.py.swp

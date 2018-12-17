@@ -2,11 +2,12 @@ numpy
 scipy
 pandas
 
+werkzeug
+flask
+
 plotly
 dash
 dash-html-components
 dash-core-components
 dash-table
 
-werkzeug
-flask

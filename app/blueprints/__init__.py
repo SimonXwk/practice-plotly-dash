@@ -10,7 +10,7 @@ class MyBlueprint(Blueprint):
 		super(MyBlueprint, self).__init__(__blueprint_name, import_name, static_folder='static', template_folder='templates', url_prefix='/' + __blueprint_name if has_url_prefix else '', **options)
 		self.url_rules = tuple() if url_rules is None else url_rules
 		self.register_urls()
-		print(f' $ Blueprint [{__blueprint_name}] Created')
+		print(f' $ Blueprint [{__blueprint_name}] Created (urls added)')
 
 	def lazy_load_view_func(self, import_name):
 		string_to_import = '.'.join((self.import_name, import_name))

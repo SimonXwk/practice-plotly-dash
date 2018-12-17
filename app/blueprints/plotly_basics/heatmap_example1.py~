@@ -27,12 +27,11 @@ def draw():
 	)]
 
 	layout = go.Layout(
-		title=f"{' '.join((data_source.rsplit('.', 1)[0][:4], data_source.rsplit('.', 1)[0][4:-2], data_source.rsplit('.', 1)[0][-2:]))} Temperature ({colorscale})",
-		yaxis={'title': 'TIME'},
-		xaxis={'title': 'WEEKDAY'},
+		title=f"{data_source} Temperature ({colorscale})",
+		yaxis={'title': 'DAY'},
+		xaxis={'title': 'TIME'},
 		hovermode="x"
 	)
 
 	fig = go.Figure(data=data, layout=layout)
 	return fig
-
