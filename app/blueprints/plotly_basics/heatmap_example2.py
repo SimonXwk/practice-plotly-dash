@@ -10,9 +10,9 @@ from app.helper import single_plot_to_html_div
 def draw():
 	data_sources = ['2010YumaAZ.csv', '2010SantaBarbaraCA.csv', '2010SitkaAK.csv']
 
-	rows = 1
-	cols = 3
-	start_cell = 'top-left'  # 'top-left', 'bottom-left'
+	rows = 3
+	cols = 1
+
 	plot_height = 500
 	vertical_spacing = 0.04
 
@@ -22,7 +22,6 @@ def draw():
 		start_cell='top-left',  # 'top-left', 'bottom-left'
 		shared_yaxes=False,
 		shared_xaxes=False,
-		print_grid=False,
 		# specs=[[{}, {}, {}]],
 		# vertical_spacing=vertical_spacing,
 		# horizontal_spacing=0.001,
@@ -33,7 +32,7 @@ def draw():
 	min_z = 0
 	max_z = 0
 	for index, data_source in enumerate(data_sources):
-		df = pd.read_csv(find_raw_csv_path(data_sources[index]))
+		df = pd.read_csv(find_raw_csv_path(data_source))
 		dfs.append(df)
 		min_z = df['T_HR_AVG'].min() if index == 0 else min(min_z, df['T_HR_AVG'].min())
 		max_z = df['T_HR_AVG'].max() if index == 0 else max(max_z, df['T_HR_AVG'].max())
